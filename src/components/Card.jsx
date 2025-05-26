@@ -1,6 +1,5 @@
 const Card = (props) =>{
     const imageURL = new URL(`../assets/${props.imagen}`, import.meta.url).href;
-    console.log('URL de imagen de producto:', imageURL);
 
     return  <article>
                 <img src={imageURL} alt={props.nombre}/>
