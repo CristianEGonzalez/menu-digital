@@ -9,7 +9,7 @@ const Card = (props) =>{
                         <li key={i}>{item}</li>
                     ))}
                 </ol>
-                <button><img src="/images/checkout.png" alt="Añadir al Carrito" />Anadir al Carrito</button>
+                {/* <button><img src="/images/checkout.png" alt="Añadir al Carrito" />Anadir al Carrito</button> */}
             </article>
 }
 
