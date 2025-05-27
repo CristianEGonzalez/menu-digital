@@ -33,11 +33,11 @@ function App() {
     <footer>
       <p>Sitio creado por Cristian Emmanuel Gonzalez | 2023</p>
       <ul>
-        <a href="https://www.instagram.com/cris_lovefit/" target="_blank">
+        <a href="https://www.instagram.com/cris.dev_" target="_blank">
           <img src="/images/instagram.png" alt="Logo Instagram"></img>
           <li class="redesimg">Instagram</li>
         </a>
-        <a href="https://www.linkedin.com/in/cristian-gonzalez-174b44b5/" target="_blank">
+        <a href="https://www.linkedin.com/in/cristian-gonzalez-dev" target="_blank">
           <img src="/images/linkedin.png" alt="Logo Linkedin"></img>
           <li class="redesimg">LinkedIn</li>
         </a>
