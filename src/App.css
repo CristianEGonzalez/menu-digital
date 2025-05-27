@@ -46,18 +46,17 @@ header .top{
 
 
 header h2{
-    background-color: #ffa500;
+    background: linear-gradient(to left, #ffcc11, #ff8c00, #ffcc11);
     padding: 10px;
     text-align: center;
     color: #fff;
     text-shadow: 0 0 10px #000;
 }
 .title{
-    border: 5px solid #b8860b;
+    border: 5px solid #ff8c00;
     padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 3px 3px 20px #000;
-    transform: rotate(6deg);
     background-color: #fff;
     margin-top: 200px;
 }
@@ -95,13 +94,12 @@ nav li{
     
 }
 nav li:hover{
-    transform: translateX(-10px);
-    list-style: square;
+    transform: scale(1.1);
 }
 
 nav a{
     color: #fff;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 
