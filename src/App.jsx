@@ -1,12 +1,12 @@
 import './App.css'
-import Card from './components/Card'
-import productos from './data'
+import Section from './components/Section'
+import {secciones} from './data';
 
 function App() {
   return <>
     <header>
-      <div class="top">
-        <div class="title">
+      <div className="top">
+        <div className="title">
         <h1>Old Sprinfield</h1>
         </div>
       </div>
@@ -14,28 +14,21 @@ function App() {
     </header>
     <nav>
       <ul>
-        <a href="#asado"><li>Hamburguesas de Asado</li></a>
-        <a href="#vegan"><li>Hamburguesas Veggies</li></a>
+          {secciones.map((s, index) => (
+            <a key={index} href={`#${s.link}`}>
+              <li>{s.titulo}</li>
+            </a>
+          ))}
       </ul>
     </nav>
     <main>
-
-      <h1 class="top-section" id="asado">HAMBURGUESAS DE ASADO</h1>
-      <section>
-        {productos.map((p,index) => (
-          <Card
+        {secciones.map((s, index) => (
+          <Section
             key={index}
-            nombre={p.nombre}
-            imagen={p.imagen}
-            ingredientes={p.ingredientes}
+            titulo={s.titulo}  // Corregido: usa 's' en lugar de 'p'
+            link={s.link}
           />
         ))}
-      </section>
-
-      <h1 class="top-section" id="vegan">HAMBURGUESAS VEGGIES</h1>
-      <section>
-    
-      </section>
     </main>
     <footer>
       <p>Sitio creado por Cristian Emmanuel Gonzalez | 2023</p>
