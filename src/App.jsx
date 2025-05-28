@@ -1,8 +1,8 @@
 import './App.css'
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Section from './components/Section'
-import Footer from './components/Footer'
+import Header from './components/Header/Header'
+import Nav from './components/Nav/Nav'
+import Section from './components/Section/Section'
+import Footer from './components/Footer/Footer'
 import {secciones} from './data';
 
 function App() {
