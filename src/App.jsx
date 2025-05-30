@@ -4,11 +4,13 @@ import Nav from './components/Nav/Nav'
 import Section from './components/Section/Section'
 import Footer from './components/Footer/Footer'
 import {secciones} from './data';
+import FloatButton from './components/FloatButton/FloatButton'
 
 function App() {
   return <>
     <Header/>
     <Nav/>
+    <FloatButton/>
     <main>
         {secciones.map((s, index) => (
           <Section

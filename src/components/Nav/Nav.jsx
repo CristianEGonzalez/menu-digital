@@ -1,4 +1,4 @@
-import styles from './_nav.module.css';
+import styles from './nav.module.css';
 
 import { secciones } from '../../data';
 

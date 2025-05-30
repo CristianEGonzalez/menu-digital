@@ -1,6 +1,6 @@
 import { productos } from '../../data';
 import Card from '../Card/Card'
-import styles from './_section.module.css';
+import styles from './section.module.css';
 
 const Section = (props) =>{
     //const imageURL = new URL(`../assets/${props.imagen}`, import.meta.url).href;
