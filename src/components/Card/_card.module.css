@@ -8,7 +8,7 @@
     max-width: 100%;
 }
 
-.card__image-container {
+.card__imageContainer {
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;

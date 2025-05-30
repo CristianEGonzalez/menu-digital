@@ -1,13 +1,13 @@
-import './_header.css';
+import styles from './_header.module.css';
 
 const Header = () =>{
-    return  <header className='header'>
-                <div className='header__top'>
-                    <div className='header__title'>
-                        <h1 className='header__heading'>Old Sprinfield</h1>
+    return  <header className={styles.header}>
+                <div className={styles.header__top}>
+                    <div className={styles.header__title}>
+                        <h1 className={styles.header__heading}>Old Sprinfield</h1>
                     </div>
                 </div>
-                <h2 className='header__subtitle'>HAMBURGUESERÍA</h2>
+                <h2 className={styles.header__subtitle}>HAMBURGUESERÍA</h2>
             </header>
 }
 

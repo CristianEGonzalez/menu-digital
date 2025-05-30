@@ -13,7 +13,9 @@
 }
 
 .footer__text {
+    font-family: 'Chakra Petch', sans-serif;
     text-align: center;
+    margin: 0px 20px;
 }
 
 .footer__icon {
@@ -27,11 +29,11 @@
     transform: rotate(1440deg);
 }
 
-.footer__social-list:hover {
+.footer__socialList:hover {
     color: #fff;
 }
 
-.footer__social-list {
+.footer__socialList {
     display: inline;
     vertical-align: middle;
     list-style: none;

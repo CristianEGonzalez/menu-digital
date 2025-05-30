@@ -1,13 +1,13 @@
-import './_nav.css';
+import styles from './_nav.module.css';
 
 import { secciones } from '../../data';
 
 const Nav = () =>{
     return  <nav>
-                <ul className='nav__list'>
+                <ul className={styles.nav__list}>
                     {secciones.map((s, index) => (
-                        <a className='nav__link' key={index} href={`#${s.link}`}>
-                            <li className='nav__item'>{s.titulo}</li>
+                        <a className={styles.nav__link} key={index} href={`#${s.link}`}>
+                            <li className={styles.nav__item}>{s.titulo}</li>
                         </a>
                     ))}
                 </ul>
