@@ -7,7 +7,7 @@ const Section = (props) =>{
     const productosFiltrados = productos.filter(p => p.seccion === props.titulo);
 
     return  <>
-        <h1 className={styles.section__title} id={props.link}>{props.titulo}</h1>
+        <h1 className={styles.title} id={props.link}>{props.titulo}</h1>
         <section className={styles.section}>
             {productosFiltrados.map((p,index) => (
                 <Card

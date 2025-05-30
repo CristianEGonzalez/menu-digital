@@ -12,28 +12,28 @@
     align-items: center;
 }
 
-.footer__text {
+.text {
     font-family: 'Chakra Petch', sans-serif;
     text-align: center;
     margin: 0px 20px;
 }
 
-.footer__icon {
+.icon {
     width: 16px;
     vertical-align: middle;
     margin-right: 1em;
     transition: 2s;
 }
 
-.footer__icon:hover {
+.icon:hover {
     transform: rotate(1440deg);
 }
 
-.footer__socialList:hover {
+.socialList:hover {
     color: #fff;
 }
 
-.footer__socialList {
+.socialList {
     display: inline;
     vertical-align: middle;
     list-style: none;

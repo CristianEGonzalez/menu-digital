@@ -1,4 +1,4 @@
-.nav__list {
+.list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -6,7 +6,7 @@
     list-style: none;
 }
 
-.nav__item {
+.item {
     text-align: center;
     font-weight: bold;
     font-size: large;
@@ -19,21 +19,21 @@
     background: #000;
 }
 
-.nav__item:hover {
+.item:hover {
     transform: scale(1.1);
 }
 
-.nav__link {
+.link {
     color: #fff;
     transition: 0.3s;
 }
 
-.nav__link:hover {
+.link:hover {
     color: #ff8c00;
 }
 
 @media screen and (max-width: 420px) {
-    .nav__item {
+    .item {
         width: 80vw;
         max-width: 80%;
         margin: 10px auto;

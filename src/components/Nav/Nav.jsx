@@ -4,10 +4,10 @@ import { secciones } from '../../data';
 
 const Nav = () =>{
     return  <nav>
-                <ul className={styles.nav__list}>
+                <ul className={styles.list}>
                     {secciones.map((s, index) => (
-                        <a className={styles.nav__link} key={index} href={`#${s.link}`}>
-                            <li className={styles.nav__item}>{s.titulo}</li>
+                        <a className={styles.link} key={index} href={`#${s.link}`}>
+                            <li className={styles.item}>{s.titulo}</li>
                         </a>
                     ))}
                 </ul>

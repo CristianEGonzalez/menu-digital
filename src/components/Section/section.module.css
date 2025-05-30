@@ -4,7 +4,7 @@
     justify-content: space-around;
 }
 
-.section__title {
+.title {
     position: sticky;
     top: 0;
     width: 100vw;
@@ -17,7 +17,7 @@
 }
 
 @media screen and (max-width: 420px) {
-    .section__title {
+    .title {
         font-size: 1.5rem;
     }
 }
