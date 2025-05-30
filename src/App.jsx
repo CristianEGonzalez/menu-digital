@@ -17,6 +17,7 @@ function App() {
             key={index}
             titulo={s.titulo}
             link={s.link}
+            imagen={s.imagen}
           />
         ))}
     </main>

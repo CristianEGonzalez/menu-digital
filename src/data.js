@@ -101,17 +101,21 @@ export const secciones = [
   {
     titulo: "Burgers",
     link: "burgers",
+    imagen: "banner-burgers.jpg",
   },
   {
     titulo: "Vegan Burgers",
     link: "veggies",
+    imagen: "banner-veggies.jpg",
   },
   {
     titulo: "Chicken Burgers",
     link: "chicken",
+    imagen: "banner-chicken.jpg",
   },
   {
     titulo: "Fries & Sides",
     link: "sides",
+    imagen: "banner-sides.jpg",
   }
 ]
