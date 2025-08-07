@@ -1,7 +1,6 @@
 import './App.css'
 import { Navigate, Route, Routes } from "react-router-dom"
 // import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import Header from './components/Header/Header'
 import Home from "../src/pages/Home"
 import Admin from './pages/Admin'
 
