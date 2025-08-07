@@ -1,28 +1,31 @@
 import './App.css'
+import { Navigate, Route, Routes } from "react-router-dom"
+// import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Header from './components/Header/Header'
-import Nav from './components/Nav/Nav'
-import Section from './components/Section/Section'
-import Footer from './components/Footer/Footer'
-import {secciones} from './data';
-import FloatButton from './components/FloatButton/FloatButton'
+import Home from "../src/pages/Home"
+import Admin from './pages/Admin'
 
-function App() {
-  return <>
-    <Header/>
-    <Nav/>
-    <FloatButton/>
-    <main>
-        {secciones.map((s, index) => (
-          <Section
-            key={index}
-            titulo={s.titulo}
-            link={s.link}
-            imagen={s.imagen}
-          />
-        ))}
-    </main>
-    <Footer/>
+const App = () => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={ <Home /> } />
+        {/* <Route path="/login" element={ <Login /> } /> */}
+        <Route path="/*" element={ <Navigate to="/" /> } />
+        <Route path="/admin" element={ <Admin/>} />
+
+
+      {/* COMO QUEDARIA CON LA AUTENTICACIÓN APLICADA */}
+        {/* <Route path="/admin" element={ 
+          <PrivateRoute>
+            <Admin/>
+          </PrivateRoute>}
+        /> */}
+        
+        
+      </Routes>
     </>
-}
+  );
+};
 
-export default App
+export default App;
