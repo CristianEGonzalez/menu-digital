@@ -4,7 +4,8 @@ require('dotenv').config()
 
 const createSection = async (req, res) => {
   try {
-    const { title, link, image } = req.body
+    const { title, link } = req.body
+    const image = req.file.filename;
     const newSection = new Section({ title, link, image });
     await newSection.save();
 
