@@ -4,7 +4,8 @@ require('dotenv').config()
 
 const createMenuItem = async (req, res) => {
   try {
-    const { name, photo, price, ingredients, section } = req.body
+    const { name, price, ingredients, section } = req.body
+    const photo = req.file.filename;
     const newMenuItem = new MenuItem({ name, photo, price, ingredients, section });
     await newMenuItem.save();
 
