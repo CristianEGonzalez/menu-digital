@@ -14,6 +14,17 @@ const createSection = async (req, res) => {
   }
 };
 
+const getSections = async (_, res) => {
+  try {
+    const sections = await Section.find()
+    return res.status(200).json(sections);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error al obtener las secciones", error });
+  }
+}
+
 module.exports = {
-    createSection
+    createSection,
+    getSections
 }

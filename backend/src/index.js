@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 app.use('/menuItems', require('./routes/menuItemRoutes'));
-app.use('/section', require('./routes/sectionRoutes'));
+app.use('/sections', require('./routes/sectionRoutes'));
 
 // Conexión a MongoDB
 conectarDB()

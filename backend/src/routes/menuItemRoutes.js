@@ -4,7 +4,7 @@ const menuItemController = require('../controllers/menuItemController');
 const router = Router();
 
 router.post('/', menuItemController.createMenuItem);
-// router.get('/', menuItemController.getMenuItemList);
+router.get('/', menuItemController.getMenuItemList);
 // router.get('/:id', menuItemController.getMenuItem);
 // router.put('/:id', menuItemController.updateMenuItem);
 // router.delete('/:id', menuItemController.deleteMenuItem);

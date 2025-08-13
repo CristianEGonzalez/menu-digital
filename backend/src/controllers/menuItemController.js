@@ -14,6 +14,16 @@ const createMenuItem = async (req, res) => {
   }
 };
 
+const getMenuItemList = async (_, res) => {
+  try {
+    const menuItems = await MenuItem.find()
+    return res.status(200).json(menuItems);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error al obtener los Menu Items", error });
+  }
+}
+
 // const mostrarComentarios = async (_, res) => {
 //   const cacheKey = 'comentarios:todos'
 //   try {
@@ -87,5 +97,6 @@ const createMenuItem = async (req, res) => {
 // };
 
 module.exports = {
-    createMenuItem
+    createMenuItem,
+    getMenuItemList
 }

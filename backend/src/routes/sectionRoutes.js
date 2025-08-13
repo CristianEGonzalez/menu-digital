@@ -4,7 +4,7 @@ const sectionController = require('../controllers/sectionController');
 const router = Router();
 
 router.post('/', sectionController.createSection);
-// router.get('/', sectionController.getMenuItemList);
+router.get('/', sectionController.getSections);
 // router.get('/:id', sectionController.getMenuItem);
 // router.put('/:id', sectionController.updateMenuItem);
 // router.delete('/:id', sectionController.deleteMenuItem);
