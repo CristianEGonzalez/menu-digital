@@ -7,7 +7,6 @@
     font-size: 1rem;
     color: #fff;
     text-shadow: 0 0 5px #000;
-    box-shadow: -2px -2px 2px #000;
     background: linear-gradient(to left, #ffcc11, #ff8c00, #ffcc11);
     align-items: center;
 }

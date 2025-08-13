@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 // import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Home from "../src/pages/Home"
 import Admin from './pages/Admin'
+import Footer from '../src/components/Footer/Footer'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         
         
       </Routes>
+      <Footer/>
     </>
   );
 };
