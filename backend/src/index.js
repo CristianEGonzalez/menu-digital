@@ -1,6 +1,5 @@
 const express = require('express')
 const conectarDB = require('./config/db')
-const redisClient = require('./config/redisClient')
 
 const app = express()
 require('dotenv').config()
@@ -8,15 +7,12 @@ require('dotenv').config()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
-// app.use('/users', require('./routes/userRoutes'));
+app.use('/menuItems', require('./routes/menuItemRoutes'));
+app.use('/section', require('./routes/sectionRoutes'));
 
 // Conexión a MongoDB
 conectarDB()
 
-//Conexión a Redis
-redisClient.connect()
-    .then(() => console.log('Conectado a Redis'))
-    .catch(console.error)
 
 app.listen(PORT, ()=>{
     console.log(`Aplicación corriendo en el puerto: ${PORT}`)

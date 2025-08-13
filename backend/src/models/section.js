@@ -1,16 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Definimos el esquema del modelo
 const sectionSchema = new Schema({
-  nombre: {
+  title: {
     type: String,
     required: true,
-    unique: true, // Asegura que no haya secciones con el mismo nombre
+    unique: true,
+    trim: true
+  },
+  link: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  image: {
+    type: String,
+    required: true,
     trim: true
   }
 });
 
-// Creamos y exportamos el modelo
-const Section = mongoose.model('Section', seccionSchema);
+const Section = mongoose.model('Section', sectionSchema);
 module.exports = Section;
