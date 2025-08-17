@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const createMenuItem = async (req, res) => {
   try {
-    const { name, price, ingredients, section } = req.body
+    const { name, price, ingredients, section } = req.body;
     const photo = req.file.filename;
     const newMenuItem = new MenuItem({ name, photo, price, ingredients, section });
     await newMenuItem.save();
@@ -17,7 +17,7 @@ const createMenuItem = async (req, res) => {
 
 const getMenuItemList = async (_, res) => {
   try {
-    const menuItems = await MenuItem.find()
+    const menuItems = await MenuItem.find();
     return res.status(200).json(menuItems);
   } catch (error) {
     console.error(error);
@@ -25,47 +25,40 @@ const getMenuItemList = async (_, res) => {
   }
 }
 
-// const mostrarComentarios = async (_, res) => {
-//   const cacheKey = 'comentarios:todos'
+const getMenuItem = async (req, res) => {
+  try{
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "ID inválido" });
+    }
+    const menuItem = await MenuItem.findById(id);
+    return res.status(200).json(menuItem)
+  } catch (error){
+    return res.status(500).json({ message: "Error al obtener el Menu Item", error });
+  }
+}
+
+const deleteMenuItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await MenuItem.findByIdAndDelete(id);
+    return res.status(200).json({ message: "Menu Item eliminado exitosamente" })
+  } catch (error) {
+    return res.status(500).json({ message:"Error al eliminar Menu Item", error});
+  }
+}
+
+// const eliminarComentario = async (req, res) => {
 //   try {
-//     const cached = await redisClient.get(cacheKey)
-//     if(cached){
-//       return res.status(200).json(JSON.parse(cached))
-//     }
+//     const commentId = req.params.id;
+//     await Comment.findByIdAndDelete(commentId);
 
-//     const fechaLimite = new Date();
-//     fechaLimite.setMonth(fechaLimite.getMonth() - process.env.ANTIGUEDAD_COMENTARIO); 
+//     await redisClient.del(`comentario:${id}`)
+//     await redisClient.del('comentarios:todos')
 
-//     const comentarios = await Comment.find({ 
-//       createdAt: { $gte: fechaLimite }
-//     }).select("comment");
-
-//     await redisClient.set(cacheKey, JSON.stringify(comentarios), { EX: 300 })
-//     return res.status(200).json(comentarios);
+//     return res.status(200).json({message: "Comentario eliminado exitosamente"});
 //   } catch (error) {
-//     return res.status(500).json({ message: "Error al mostrar comentarios", error });
-//   }
-// };
-
-// const mostrarComentario = async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     if (!mongoose.Types.ObjectId.isValid(id)) {
-//       return res.status(400).json({ message: "ID inválido" });
-//     }
-//     const cacheKey = `comentario:${id}`
-//     const cached = await redisClient.get(cacheKey)
-//     if(cached){
-//       return res.status(200).json(JSON.parse(cached))
-//     }
-
-//     const comentario = await Comment.findById(id);
-    
-//     await redisClient.set(cacheKey, JSON.stringify(comentario), { EX: 300 })
-
-//     return res.status(200).json(comentario);
-//   } catch (error) {
-//     return res.status(500).json({ message: "Error al mostrar comentario", error });
+//     return res.status(500).json({ message:"Error al eliminar comentario", error});
 //   }
 // };
 
@@ -83,21 +76,10 @@ const getMenuItemList = async (_, res) => {
 //   }  
 // }
 
-// const eliminarComentario = async (req, res) => {
-//   try {
-//     const commentId = req.params.id;
-//     await Comment.findByIdAndDelete(commentId);
-
-//     await redisClient.del(`comentario:${id}`)
-//     await redisClient.del('comentarios:todos')
-
-//     return res.status(200).json({message: "Comentario eliminado exitosamente"});
-//   } catch (error) {
-//     return res.status(500).json({ message:"Error al eliminar comentario", error});
-//   }
-// };
 
 module.exports = {
     createMenuItem,
-    getMenuItemList
+    getMenuItemList,
+    getMenuItem,
+    deleteMenuItem
 }

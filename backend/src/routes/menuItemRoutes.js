@@ -6,8 +6,8 @@ const router = Router();
 
 router.post('/', upload.single('photo'), menuItemController.createMenuItem);
 router.get('/', menuItemController.getMenuItemList);
-// router.get('/:id', menuItemController.getMenuItem);
+router.get('/:id', menuItemController.getMenuItem);
+router.delete('/:id', menuItemController.deleteMenuItem);
 // router.put('/:id', menuItemController.updateMenuItem);
-// router.delete('/:id', menuItemController.deleteMenuItem);
 
 module.exports = router;
