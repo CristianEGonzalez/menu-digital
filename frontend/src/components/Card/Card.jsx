@@ -3,8 +3,7 @@ import styles from './card.module.css';
 const Card = (props) =>{
     const imageURL = new URL(`../../assets/${props.imagen}`, import.meta.url).href;
 
-    const mensaje = `Hola! Quiero pedir un/a ${props.nombre}`;
-    const whatsappUrl = `https://wa.me/1130608503?text=${encodeURIComponent(mensaje)}`;
+
 
     return  <article className={styles.card}>
                 <div className={styles.imageContainer}>
@@ -16,10 +15,13 @@ const Card = (props) =>{
                         <li key={i}>{item}</li>
                     ))}
                 </ol>
-                <a href={whatsappUrl} className={styles.button} target="_blank">
-                    <img className={styles.buttonIcon} src="/images/whatsapp.png" alt="Whatsapp"></img>
-                    Pedir por Whatsapp
-                </a>
+                <button
+                    className={styles.button} target="_blank"
+                    onClick={() => props.agregarAlPedido(props.nombre)}
+                >
+                    <img className={styles.buttonIcon} src="/images/checkout.png" alt="Whatsapp"></img>
+                    Agregar al pedido
+                </button>
             </article>
 }
 

@@ -1,0 +1,29 @@
+.pedidoButton {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #25d366;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+
+.pedidoButton:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}

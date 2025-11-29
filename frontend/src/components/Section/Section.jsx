@@ -11,7 +11,6 @@ const Section = (props) => {
     };
 
     const bannerImageUrl = new URL(`../../assets/${props.imagen}`, import.meta.url).href;
-
     const productosFiltrados = productos.filter(p => p.seccion === props.titulo);
 
     return (
@@ -30,6 +29,7 @@ const Section = (props) => {
                             nombre={p.nombre}
                             imagen={p.imagen}
                             ingredientes={p.ingredientes}
+                            agregarAlPedido={props.agregarAlPedido}
                         />
                     ))}
                 </div>
