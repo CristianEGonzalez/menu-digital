@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./ProductForm.module.css";
+import styles from "./productForm.module.css";
 import { secciones } from '../../data';
 
 const ProductForm = () => {
