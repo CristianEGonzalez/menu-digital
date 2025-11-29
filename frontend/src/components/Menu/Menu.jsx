@@ -1,5 +1,3 @@
-// src/components/Menu/Menu.js
-
 import { useState } from 'react';
 import Section from '../Section/Section';
 import BotonPedido from '../BotonPedido/BotonPedido';
@@ -42,7 +40,8 @@ const Menu = () => {
         
         mensaje += `\nPara comer en el local.`;
 
-        const url = `https://wa.me/5491130608503?text=${encodeURIComponent(mensaje)}`;
+        const numeroWhatsapp = import.meta.env.VITE_WHATSAPP_NUMBER;
+        const url = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensaje)}`;
         window.open(url, '_blank');
         setIsModalOpen(false);
     };
