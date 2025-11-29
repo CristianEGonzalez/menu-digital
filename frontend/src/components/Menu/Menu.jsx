@@ -1,31 +1,50 @@
+// src/components/Menu/Menu.js
+
 import { useState } from 'react';
 import Section from '../Section/Section';
-import BotonPedido from '../BotonPedido/BotonPedido'; // <--- Importamos el nuevo
+import BotonPedido from '../BotonPedido/BotonPedido';
+import OrderModal from '../OrderModal/OrderModal';
 import { secciones } from '../../data';
 
 const Menu = () => {
     const [pedido, setPedido] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // 1. AGREGAR
     const agregarAlPedido = (producto) => {
         setPedido([...pedido, producto]);
-        console.log("Se agregó:", producto);
     };
 
-    const enviarPedido = () => {
-        if (pedido.length === 0) return;
+    // 2. ELIMINAR UNO
+    const eliminarUnidad = (producto) => {
+        const index = pedido.lastIndexOf(producto);
+        if (index > -1) {
+            const nuevoPedido = [...pedido];
+            nuevoPedido.splice(index, 1);
+            setPedido(nuevoPedido);
+            
+            // Si nos quedamos sin items, cerramos el modal automáticamente
+            if (nuevoPedido.length === 0) setIsModalOpen(false);
+        }
+    };
 
+    // 3. CONFIRMAR Y ENVIAR
+    const confirmarPedido = (nombreCliente) => {
         const resumen = pedido.reduce((acc, item) => {
             acc[item] = (acc[item] || 0) + 1;
             return acc;
         }, {});
 
-        let mensaje = "Hola! Quiero pedir:\n";
+        let mensaje = `Hola! Soy *${nombreCliente}* y quiero pedir:\n\n`;
         Object.entries(resumen).forEach(([nombre, cantidad]) => {
             mensaje += `- ${cantidad}x ${nombre}\n`;
         });
+        
+        mensaje += `\nPara comer en el local.`;
 
         const url = `https://wa.me/5491130608503?text=${encodeURIComponent(mensaje)}`;
         window.open(url, '_blank');
+        setIsModalOpen(false);
     };
 
     return (
@@ -42,13 +61,22 @@ const Menu = () => {
                 ))}
             </div>
 
-            {/* Solo mostramos el botón si hay algo en el pedido */}
             {pedido.length > 0 && (
                 <BotonPedido 
                     cantidad={pedido.length} 
-                    onClick={enviarPedido} 
+                    onClick={() => setIsModalOpen(true)} 
                 />
             )}
+
+            {/* Pasamos tanto agregar como eliminar al modal */}
+            <OrderModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={confirmarPedido}
+                pedido={pedido}                   // Lista completa
+                agregarUno={agregarAlPedido}      // Botón (+)
+                eliminarUno={eliminarUnidad}      // Botón (-)
+            />
         </>
     );
 };

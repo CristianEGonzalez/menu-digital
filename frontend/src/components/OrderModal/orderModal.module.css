@@ -1,0 +1,114 @@
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.modal {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    overflow: hidden; /* Para que el scroll sea interno */
+    animation: slideUp 0.3s ease;
+}
+
+.header {
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.header h2 { margin: 0; font-size: 1.2rem; }
+
+.closeX {
+    background: none; border: none; font-size: 1.5rem; cursor: pointer;
+}
+
+/* Área scrollable de productos */
+.productList {
+    padding: 10px 20px;
+    overflow-y: auto; /* Scroll si hay muchos items */
+    max-height: 40vh; /* Altura máxima de la lista */
+}
+
+.productRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.productName { font-weight: 500; text-align: left; flex: 1; }
+
+.counterControls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.countBtn {
+    background: white;
+    border: none;
+    width: 25px; height: 25px;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+}
+
+.countValue { font-weight: bold; min-width: 20px; text-align: center; }
+
+.divider { height: 1px; background: #eee; width: 100%; }
+
+.form {
+    padding: 20px;
+    background-color: white;
+}
+
+.form label { display: block; text-align: left; font-size: 0.9rem; color: #666; margin-bottom: 5px; }
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.confirmBtn {
+    width: 100%;
+    padding: 14px;
+    background-color: #25d366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+.confirmBtn:disabled { background-color: #ccc; }
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
