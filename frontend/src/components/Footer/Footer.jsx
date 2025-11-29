@@ -3,7 +3,7 @@ import styles from './footer.module.css';
 const Footer = () =>{
     return  <footer className={styles.footer}>
                 <div>
-                    <p className={styles.text}>© Cristian Emmanuel Gonzalez | 2023 | Argentina</p>
+                    <p className={styles.text}>© Byteland | 2023 | Argentina</p>
                 </div>
                 <div>
                     <ul>
