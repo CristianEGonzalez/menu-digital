@@ -1,23 +1,54 @@
 import styles from './footer.module.css';
 
-const Footer = () =>{
-    return  <footer className={styles.footer}>
-                <div>
-                    <p className={styles.text}>© Byteland | 2023 | Argentina</p>
-                </div>
-                <div>
-                    <ul>
-                        <a href="https://www.instagram.com/cris.dev_" target="_blank">
-                            <img className={styles.icon} src="/images/instagram.png" alt="Logo Instagram"></img>
-                            <li className={styles.socialList}>Instagram</li>
+const Footer = () => {
+    const currentYear = new Date().getFullYear();
+
+    return (
+        <footer className={styles.footer}>
+            {/* Sección de Copyright con Link a Byteland */}
+            <div className={styles.copyrightSection}>
+                <a 
+                    href="https://www.byteland.com.ar" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={styles.brandLink} // Clase nueva para este link
+                >
+                    <p className={styles.text}>
+                        © Byteland | {currentYear} | Argentina
+                    </p>
+                </a>
+            </div>
+
+            {/* Sección de Redes Sociales */}
+            <nav>
+                <ul className={styles.socialList}>
+                    <li className={styles.socialItem}>
+                        <a 
+                            href="https://www.instagram.com/byteland_ok" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className={styles.socialLink}
+                        >
+                            <img className={styles.icon} src="/images/instagram.png" alt="Instagram" />
+                            <span>Instagram</span>
                         </a>
-                        <a href="https://www.linkedin.com/in/cristian-gonzalez-dev" target="_blank">
-                            <img className={styles.icon} src="/images/linkedin.png" alt="Logo Linkedin"></img>
-                            <li className={styles.socialList}>LinkedIn</li>
+                    </li>
+                    
+                    <li className={styles.socialItem}>
+                        <a 
+                            href="https://www.linkedin.com/in/cristian-gonzalez-dev" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className={styles.socialLink}
+                        >
+                            <img className={styles.icon} src="/images/linkedin.png" alt="LinkedIn" />
+                            <span>LinkedIn</span>
                         </a>
-                    </ul>
-                </div>
-            </footer>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    );
 }
 
-export default Footer
+export default Footer;

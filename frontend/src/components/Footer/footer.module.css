@@ -1,43 +1,95 @@
 .footer {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+    flex-direction: column; /* Por defecto (móvil): uno debajo del otro */
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 1% 2%;
-    font-size: 1rem;
+    padding: 1.5rem 1rem; /* Padding más cómodo */
+    background: linear-gradient(to left, #ffcc11, #ff8c00, #ffcc11);
     color: #fff;
     text-shadow: 0 0 5px #000;
-    background: linear-gradient(to left, #ffcc11, #ff8c00, #ffcc11);
+    gap: 1.5rem; /* Espacio vertical entre el texto y los iconos en móvil */
+}
+
+/* Estilo para el link de la marca Byteland */
+.brandLink {
+    text-decoration: none;
+    color: inherit; /* Hereda el color blanco del padre */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block; /* Asegura que ocupe el espacio correcto */
+}
+
+/* Efecto hover específico para la marca */
+.brandLink:hover .text {
+    text-shadow: 0 0 15px #fff, 0 0 25px #ff8c00; /* Efecto Glow Cyberpunk más intenso */
+    transform: scale(1.02); /* Un pequeño "pop" al pasar el mouse */
+}
+
+/* Para asegurar que la transición funcione en el texto */
+.text {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1rem;
+    margin: 0;
+    transition: all 0.3s ease; /* Suaviza la animación */
+}
+
+/* Tipografía */
+.text, .socialLink {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Lista de redes sin puntos ni márgenes extraños */
+.socialList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Si la pantalla es muy pequeña, los iconos bajan */
+    justify-content: center;
+    gap: 2rem; /* Espacio entre Instagram y LinkedIn */
+}
+
+.socialItem {
+    display: flex;
     align-items: center;
 }
 
-.text {
-    font-family: 'Chakra Petch', sans-serif;
-    text-align: center;
-    margin: 0px 20px;
+/* El enlace contenedor */
+.socialLink {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    display: flex; /* Alinea icono y texto verticalmente */
+    align-items: center;
+    transition: color 0.3s ease;
+    text-shadow: 0px 0px 5px #fff; /* Tu efecto glow original */
 }
 
+.socialLink:hover {
+    color: #000; /* Cambio sutil al pasar el mouse */
+}
+
+/* Iconos */
 .icon {
-    width: 16px;
-    vertical-align: middle;
-    margin-right: 1em;
-    transition: 2s;
+    width: 20px; /* Un poco más grande para facilitar el touch en móvil */
+    height: auto;
+    margin-right: 0.5rem;
+    transition: transform 2s ease; /* Tu animación de rotación */
 }
 
-.icon:hover {
+.socialLink:hover .icon {
     transform: rotate(1440deg);
 }
 
-.socialList:hover {
-    color: #fff;
-}
-
-.socialList {
-    display: inline;
-    vertical-align: middle;
-    list-style: none;
-    margin-right: 50px;
-    font-weight: bold;
-    font-size: 1rem;
-    text-shadow: 0px 0px 5px #fff;
+/* --- MEDIA QUERY: Versión de Escritorio --- */
+@media (min-width: 768px) {
+    .footer {
+        flex-direction: row; /* Cambia a fila */
+        justify-content: space-between; /* Copyright a la izq, Redes a la der */
+        padding: 1% 5%; /* Más padding lateral en pantallas grandes */
+        gap: 0;
+    }
 }
