@@ -2,8 +2,7 @@ import './App.css'
 import { Navigate, Route, Routes } from "react-router-dom"
 // import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Home from "../src/pages/Home"
-import Admin from './pages/Admin'
-import Footer from '../src/components/Footer/Footer'
+import Admin from './pages//Admin/Admin'
 
 const App = () => {
   return (
@@ -24,7 +23,6 @@ const App = () => {
         
         
       </Routes>
-      <Footer/>
     </>
   );
 };

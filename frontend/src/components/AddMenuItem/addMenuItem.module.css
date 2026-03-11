@@ -1,0 +1,166 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.header {
+  padding: 20px 30px;
+  background: #fdfdfd;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #1a1a1a;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.form {
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.field {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.field input, .field select {
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.field input:focus {
+  border-color: #ffcc11;
+}
+
+.ingredientRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.ingredientRow input {
+  flex: 1;
+}
+
+.ingredientRow button {
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  border-radius: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.addIngBtn {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 5px;
+  text-align: left;
+}
+
+.fileInput {
+  border: 2px dashed #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.fileInput input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fileInput span {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.actions {
+  padding: 20px 30px;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.cancelBtn {
+  background: none;
+  border: none;
+  color: #666;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.saveBtn {
+  background: #000;
+  color: #ffcc11;
+  padding: 12px 25px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #333;
+}
+
+.saveBtn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}

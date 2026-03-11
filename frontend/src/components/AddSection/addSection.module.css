@@ -1,0 +1,95 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.header {
+  padding: 20px 30px;
+  background: #fdfdfd;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.closeBtn {
+  background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #999;
+}
+
+.form { padding: 30px; }
+
+.field {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.field input {
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  outline: none;
+}
+
+.field input:focus { border-color: #ffcc11; }
+
+.fileInput {
+  border: 2px dashed #ddd;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.fileInput input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.fileInput span { font-size: 0.8rem; color: #999; }
+
+.actions {
+  padding: 20px 30px;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.cancelBtn { background: none; border: none; color: #666; font-weight: bold; cursor: pointer; }
+
+.saveBtn {
+  background: #000;
+  color: #ffcc11;
+  padding: 12px 25px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
