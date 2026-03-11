@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './AddMenuItem.module.css';
+import styles from './addMenuItem.module.css';
 import { secciones } from '../../data'; // Importamos las secciones para el select
 
 const AddMenuItem = ({ onClose, onSave }) => {
