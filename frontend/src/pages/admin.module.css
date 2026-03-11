@@ -1,31 +1,188 @@
-.newProductPage {
+.adminContainer {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #f4f4f4;
+  font-family: sans-serif;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #000;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  border-right: 1px solid #333;
+  flex-shrink: 0;
 }
 
-.siteHeader {
-  background-color: #f7e163;
-  padding: 20px;
-  text-align: center;
-  border-bottom: 2px solid #000;
+.sidebarHeader {
+  padding: 25px;
 }
 
-.logoImage {
-  max-width: 300px;
+.sidebarTitle {
+  color: #ffcc11;
+  margin: 0;
+  font-style: italic;
+  letter-spacing: -1px;
 }
 
-.mainContent {
+.navContainer {
+  padding: 0 15px;
+}
+
+.navItemActive {
+  color: #000;
+  background-color: #ffcc11;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.navItem {
+  color: #aaa;
+  padding: 12px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.navItem:hover {
+  color: #fff;
+}
+
+.mainArea {
   flex-grow: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.siteFooter {
+.topbar {
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.breadcrumb {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.onlineStatus {
+  font-size: 0.7rem;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  background-color: #ffcc11;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 35px;
+  font-size: 1.2rem;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.mainTitle {
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.addButton {
   background-color: #000;
   color: #fff;
-  text-align: center;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.addButton:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+.productTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.productTable th {
+  background-color: #fafafa;
   padding: 15px;
-  font-size: 0.9em;
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: #999;
+  letter-spacing: 1px;
+}
+
+.productTable td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.productName {
+  font-weight: bold;
+  color: #333;
+}
+
+.sectionBadge {
+  background: #eee;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #666;
+}
+
+.price {
+  font-family: monospace;
+  font-weight: bold;
+  color: #444;
+}
+
+.textRight {
+  text-align: right !important;
+}
+
+.actionsCell {
+  text-align: right;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
