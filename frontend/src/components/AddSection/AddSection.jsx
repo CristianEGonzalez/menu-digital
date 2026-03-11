@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './AddSection.module.css';
+import styles from './addSection.module.css';
 
 const AddSection = ({ onClose, onSave }) => {
   const [formData, setFormData] = useState({
