@@ -38,6 +38,26 @@ const getMenuItem = async (req, res) => {
   }
 }
 
+const updateMenuItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updateData = { ...req.body };
+
+    // Si viene una imagen nueva, actualizamos el campo photo
+    if (req.file) {
+      updateData.photo = req.file.filename;
+    }
+
+    const updatedItem = await MenuItem.findByIdAndUpdate(id, updateData, { new: true });
+    
+    if (!updatedItem) return res.status(404).json({ message: "No se encontró el item" });
+
+    return res.status(200).json(updatedItem);
+  } catch (error) {
+    return res.status(500).json({ message: "Error al actualizar el Menu Item", error });
+  }
+};
+
 const deleteMenuItem = async (req, res) => {
   try {
     const id = req.params.id;
@@ -48,38 +68,10 @@ const deleteMenuItem = async (req, res) => {
   }
 }
 
-// const eliminarComentario = async (req, res) => {
-//   try {
-//     const commentId = req.params.id;
-//     await Comment.findByIdAndDelete(commentId);
-
-//     await redisClient.del(`comentario:${id}`)
-//     await redisClient.del('comentarios:todos')
-
-//     return res.status(200).json({message: "Comentario eliminado exitosamente"});
-//   } catch (error) {
-//     return res.status(500).json({ message:"Error al eliminar comentario", error});
-//   }
-// };
-
-// const actualizarComentario = async (req,res) =>{
-//   try {
-//     const { comment, postId, userId } = req.body
-//     const comentarioActualizado = await Comment.findByIdAndUpdate(req.params.id,{comment, postId, userId}, { new: true });
-
-//     await redisClient.del(`comentario:${req.params.id}`)
-//     await redisClient.del('comentarios:todos')
-    
-//     return res.status(200).json({ message: 'Comentario actualizado', comment: comentarioActualizado });
-//   } catch (error) {
-//     return res.status(500).json({ message: 'Error al actualizar el comentario', error });
-//   }  
-// }
-
-
 module.exports = {
     createMenuItem,
     getMenuItemList,
     getMenuItem,
+    updateMenuItem,
     deleteMenuItem
 }
