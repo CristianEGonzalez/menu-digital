@@ -77,7 +77,7 @@ const Admin = () => {
                         <td className={styles.productCell}>
                           <div className={styles.productInfo}>
                             {/* Ruta absoluta desde root suele ser mejor en Vite: /src/assets/... */}
-                            <img src={`/src/assets/${prod.imagen}`} alt={prod.nombre} className={styles.productThumb} />
+                            <img src={`/menuImages/${prod.imagen}`} alt={prod.nombre} className={styles.productThumb} />
                             <span className={styles.productName}>{prod.nombre}</span>
                           </div>
                         </td>
@@ -93,7 +93,7 @@ const Admin = () => {
                       <tr key={i}>
                         <td className={styles.productCell}>
                           <div className={styles.productInfo}>
-                            <img src={`/src/assets/${sec.imagen}`} alt={sec.titulo} className={styles.sectionBannerThumb} />
+                            <img src={`/bannerImages/${sec.imagen}`} alt={sec.titulo} className={styles.sectionBannerThumb} />
                           </div>
                         </td>
                         <td className={styles.productName}>{sec.titulo}</td>

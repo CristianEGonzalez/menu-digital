@@ -1,10 +1,8 @@
 import styles from './card.module.css';
 
 const Card = (props) =>{
-    const imageURL = new URL(`../../assets/${props.imagen}`, import.meta.url).href;
-
-
-
+    const imageURL = `/menuImages/${props.imagen}`
+    
     return  <article className={styles.card}>
                 <div className={styles.imageContainer}>
                     <img className={styles.image} src={imageURL} alt={props.nombre}/>

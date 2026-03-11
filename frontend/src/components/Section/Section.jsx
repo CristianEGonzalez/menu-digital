@@ -10,7 +10,7 @@ const Section = (props) => {
         setProductsVisible(!productsVisible);
     };
 
-    const bannerImageUrl = new URL(`../../assets/${props.imagen}`, import.meta.url).href;
+    const bannerImageUrl = `/bannerImages/${props.imagen}`;
     const productosFiltrados = productos.filter(p => p.seccion === props.titulo);
 
     return (
