@@ -1,4 +1,7 @@
+import React from 'react';
 import styles from './admin.module.css';
+// Importamos los datos estáticos
+import { productos } from '../data'; 
 
 const Admin = () => {
   return (
@@ -36,24 +39,47 @@ const Admin = () => {
             </button>
           </div>
 
-          <table className={styles.productTable}>
-            <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Sección</th>
-                <th>Precio</th>
-                <th className={styles.textRight}>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className={styles.productName}>Maggie Cheese</td>
-                <td><span className={styles.sectionBadge}>BURGERS</span></td>
-                <td className={styles.price}>$8.50</td>
-                <td className={styles.actionsCell}>✏️ 🗑️</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className={styles.tableWrapper}>
+            <table className={styles.productTable}>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Sección</th>
+                  <th>Precio</th>
+                  <th className={styles.textRight}>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {productos.map((producto, index) => (
+                  <tr key={index}>
+                    <td className={styles.productCell}>
+                      <div className={styles.productInfo}>
+                        <img 
+                          src={`/src/assets/${producto.imagen}`} 
+                          alt={producto.nombre} 
+                          className={styles.productThumb}
+                        />
+                        <span className={styles.productName}>{producto.nombre}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span className={styles.sectionBadge}>
+                        {producto.seccion}
+                      </span>
+                    </td>
+                    {/* Como en data.js no tenías precios, ponemos uno por defecto o '—' */}
+                    <td className={styles.price}>
+                      {producto.precio ? `$${producto.precio}` : "$0.00"}
+                    </td>
+                    <td className={styles.actionsCell}>
+                      <button className={styles.actionBtn}>✏️</button>
+                      <button className={styles.actionBtn}>🗑️</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </main>
       </div>
     </div>
