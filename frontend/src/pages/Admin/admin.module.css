@@ -5,19 +5,29 @@
   width: 100vw;
   overflow: hidden;
   background-color: #f4f4f4;
-  font-family: sans-serif;
-  box-sizing: border-box;
+  position: relative;
 }
 
-/* Sidebar */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+/* Sidebar adaptativo */
 .sidebar {
   width: 260px;
   background-color: #000;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #333;
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+  z-index: 100;
 }
+
+.closeSidebar { display: none; }
 
 .sidebarHeader {
   padding: 25px;
@@ -30,17 +40,29 @@
   letter-spacing: -1px;
 }
 
+.menuBtn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
 .navContainer {
   padding: 0 15px;
 }
 
-.navItem {
-  color: #aaa;
+.navItem, .navItemActive {
   padding: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
   border-radius: 8px;
   margin-bottom: 5px;
+  transition: all 0.2s ease;
+}
+
+.navItem {
+  color: #aaa;
 }
 
 .navItem:hover {
@@ -51,11 +73,7 @@
 .navItemActive {
   color: #000;
   background-color: #ffeebb;
-  padding: 12px;
-  border-radius: 8px;
   font-weight: bold;
-  margin-bottom: 10px;
-  cursor: pointer;
 }
 
 /* Área de Contenido */
@@ -265,4 +283,78 @@
 
 .textRight {
   text-align: right !important;
+}
+
+
+/* Responsividad Tablet y Mobile */
+@media (max-width: 992px) {
+  .sidebar {
+    position: fixed;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+
+  .sidebarActive {
+    transform: translateX(0);
+  }
+
+  .overlay { display: block; }
+
+  .closeSidebar {
+    display: block;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .sidebarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menuBtn { display: block; }
+
+  .topbar { padding: 0 20px; }
+  
+  .content { padding: 20px; }
+
+  .mainTitle { font-size: 1.5rem; }
+
+  .hideMobile { display: none; } /* Escondemos columnas no críticas */
+  
+  .btnText { display: none; } /* "AGREGAR PRODUCTO" -> "+" */
+  
+  .addButton {
+      padding: 0; /* Quitamos el padding para controlar el círculo */
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1.5rem; /* El + más grande */
+  }
+
+  .tableWrapper {
+    overflow-x: auto; /* Scroll horizontal para la tabla */
+  }
+
+  .productCell { min-width: 150px; }
+}
+
+@media (max-width: 480px) {
+  .breadcrumb { display: none; } /* Espacio para el logo u online status */
+  
+  .productThumb { width: 35px; height: 35px; }
+
+  .sectionBannerThumb { width: 80px; height: 35px; }
+}
+
+/* Aseguramos que la tabla ocupe el ancho */
+.productTable {
+  width: 100%;
+  min-width: 500px; /* Evita que las columnas se aplasten demasiado */
 }
