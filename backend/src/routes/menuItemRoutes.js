@@ -4,7 +4,7 @@ const upload = require('../config/multer');
 // const { validarMenuItem } = require('../middleware/validarSchema');
 const router = Router();
 
-router.post('/', upload.single('photo'), menuItemController.createMenuItem);
+router.post('/', upload.single('image'), menuItemController.createMenuItem);
 router.get('/', menuItemController.getMenuItemList);
 router.get('/:id', menuItemController.getMenuItem);
 router.delete('/:id', menuItemController.deleteMenuItem);

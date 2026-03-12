@@ -5,25 +5,35 @@ require('dotenv').config()
 const createMenuItem = async (req, res) => {
   try {
     const { name, price, ingredients, section } = req.body;
-    const photo = req.file.filename;
-    const newMenuItem = new MenuItem({ name, photo, price, ingredients, section });
+    
+    if (!req.file) {
+      return res.status(400).json({ message: "La imagen es obligatoria" });
+    }
+    const image = req.file.filename;
+
+    const newMenuItem = new MenuItem({ name, image, price, ingredients, section });
     await newMenuItem.save();
 
     return res.status(201).json(newMenuItem);
   } catch (error) {
-    return res.status(500).json({ message: "Error al crear Menu Item", error });
+    return res.status(500).json({ 
+      message: "Error al crear Menu Item", 
+      error: error.message
+    });
   }
 };
 
 const getMenuItemList = async (_, res) => {
   try {
-    const menuItems = await MenuItem.find();
+    const menuItems = await MenuItem.find().populate('section');
     return res.status(200).json(menuItems);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Error al obtener los Menu Items", error });
+    res.status(500).json({ 
+      message: "Error al obtener el menú", 
+      error: error.message 
+    });
   }
-}
+};
 
 const getMenuItem = async (req, res) => {
   try{

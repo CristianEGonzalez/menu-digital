@@ -4,14 +4,24 @@ require('dotenv').config()
 
 const createSection = async (req, res) => {
   try {
-    const { title, link } = req.body
+    const { title, link } = req.body;
+
+    //Validación de imagen: Evitamos que el server explote si req.file es undefined
+    if (!req.file) {
+      return res.status(400).json({ message: "La imagen de la sección es obligatoria" });
+    }
     const image = req.file.filename;
+
     const newSection = new Section({ title, link, image });
     await newSection.save();
 
     return res.status(201).json(newSection);
+
   } catch (error) {
-    return res.status(500).json({ message: "Error al crear Sección", error });
+    return res.status(500).json({ 
+      message: "Error al crear Sección", 
+      error: error.message 
+    });
   }
 };
 

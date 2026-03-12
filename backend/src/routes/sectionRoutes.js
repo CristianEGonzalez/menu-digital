@@ -4,7 +4,7 @@ const upload = require('../config/multer');
 // const { validarMenuItem } = require('../middleware/validarSchema');
 const router = Router();
 
-router.post('/', upload.single('photo'), sectionController.createSection);
+router.post('/', upload.single('image'), sectionController.createSection);
 router.get('/', sectionController.getSections);
 // router.get('/:id', sectionController.getMenuItem);
 // router.put('/:id', sectionController.updateMenuItem);
