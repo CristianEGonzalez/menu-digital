@@ -25,6 +25,12 @@ const menuItemSchema = new Schema(
       ref: "Section", // Debe coincidir con el nombre del modelo de Secciones
       required: true,
     },
+
+    // Estado para el borrado lógico
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true, // Opcional: agrega createdAt y updatedAt automáticamente

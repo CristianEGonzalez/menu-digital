@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const sectionSchema = new Schema({
@@ -6,20 +6,25 @@ const sectionSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
   },
   link: {
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
   },
   image: {
     type: String,
     required: true,
-    trim: true
-  }
+    trim: true,
+  },
+  // Estado para el borrado lógico
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-const Section = mongoose.model('Section', sectionSchema);
+const Section = mongoose.model("Section", sectionSchema);
 module.exports = Section;

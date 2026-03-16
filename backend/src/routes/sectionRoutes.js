@@ -6,8 +6,9 @@ const router = Router();
 
 router.post('/', upload.single('image'), sectionController.createSection);
 router.get('/', sectionController.getSections);
+router.delete('/:id', sectionController.deleteSection);
+router.patch('/:id/restore', sectionController.restoreSection);
 // router.get('/:id', sectionController.getMenuItem);
 // router.put('/:id', sectionController.updateMenuItem);
-// router.delete('/:id', sectionController.deleteMenuItem);
 
 module.exports = router;

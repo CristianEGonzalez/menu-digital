@@ -1,5 +1,6 @@
 const Section = require('../models/section');
 const mongoose = require('mongoose');
+const MenuItem = require('../models/menuItem');
 require('dotenv').config()
 
 const createSection = async (req, res) => {
@@ -25,17 +26,70 @@ const createSection = async (req, res) => {
   }
 };
 
-const getSections = async (_, res) => {
+const getSections = async (req, res) => {
+  const showAll = req.query.all === 'true';
+  const query = showAll ? {} : { isActive: true };
+  const secciones = await Section.find(query);
+  res.json(secciones);
+};
+
+const deleteSection = async (req, res) => {
   try {
-    const sections = await Section.find()
-    return res.status(200).json(sections);
+    const { id } = req.params;
+
+    // 1. Verificamos si hay productos activos en esta sección
+    // Usamos countDocuments para ser eficientes (no traemos todos los datos, solo el número)
+    const activeProducts = await MenuItem.countDocuments({ 
+      section: id, 
+      isActive: true 
+    });
+
+    if (activeProducts > 0) {
+      return res.status(400).json({ 
+        message: `No se puede borrar: esta sección tiene ${activeProducts} productos activos.` 
+      });
+    }
+
+    // 2. Procedemos al borrado lógico
+    // IMPORTANTE: Asignamos el resultado a una constante para poder validarla
+    const sectionToDisable = await Section.findByIdAndUpdate(
+      id, 
+      { isActive: false }, 
+      { new: true } // Esto devuelve el documento ya actualizado
+    );
+    
+    // Si el ID no existía en la base de datos
+    if (!sectionToDisable) {
+      return res.status(404).json({ message: "Sección no encontrada" });
+    }
+    
+    res.json({ message: "Sección desactivada con éxito (borrado lógico)" });
+
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Error al obtener las secciones", error });
+    console.error("Error en deleteSection:", error);
+    res.status(500).json({ 
+      message: "Error interno del servidor", 
+      error: error.message 
+    });
   }
-}
+};
+
+const restoreSection = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const restored = await Section.findByIdAndUpdate(id, { isActive: true }, { new: true });
+    
+    if (!restored) return res.status(404).json({ message: "No se encontró" });
+    
+    res.json({ message: "Sección restaurada con éxito", data: restored });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
     createSection,
-    getSections
+    getSections,
+    deleteSection,
+    restoreSection
 }

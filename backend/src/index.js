@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000
 // pero es mejor restringirlo a nuestro frontend por seguridad:
 app.use(cors({
   origin: process.env.FRONTEND_URL, // Reemplazar por el puerto donde corra Vite
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   credentials: true
 }));
 
