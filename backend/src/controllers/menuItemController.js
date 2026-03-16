@@ -11,11 +11,27 @@ const createMenuItem = async (req, res) => {
     }
     const image = req.file.filename;
 
-    const newMenuItem = new MenuItem({ name, image, price, ingredients, section });
+    // Normalización de ingredientes (fixeado de String)
+    let ingredientsArray = ingredients;
+
+    if (typeof ingredientsArray === 'string') {
+      // Si el usuario mandó ingredientes, los separamos. Si está vacío, mandamos array vacío.
+      ingredientsArray = ingredientsArray ? ingredientsArray.split(',').map(ing => ing.trim()) : [];
+    }
+
+    const newMenuItem = new MenuItem({ 
+      name, 
+      image, 
+      price, 
+      ingredients: ingredientsArray, 
+      section 
+    });
+
     await newMenuItem.save();
 
     return res.status(201).json(newMenuItem);
   } catch (error) {
+    console.error("Error en createMenuItem:", error);
     return res.status(500).json({ 
       message: "Error al crear Menu Item", 
       error: error.message
@@ -23,15 +39,15 @@ const createMenuItem = async (req, res) => {
   }
 };
 
-const getMenuItemList = async (_, res) => {
+const getMenuItemList = async (req, res) => {
   try {
-    const menuItems = await MenuItem.find().populate('section');
-    return res.status(200).json(menuItems);
+    const showAll = req.query.all === 'true';
+    const query = showAll ? {} : { isActive: true };
+    // Usamos populate para traer el nombre de la sección
+    const items = await MenuItem.find(query).populate('section');
+    res.json(items);
   } catch (error) {
-    res.status(500).json({ 
-      message: "Error al obtener el menú", 
-      error: error.message 
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -50,38 +66,80 @@ const getMenuItem = async (req, res) => {
 
 const updateMenuItem = async (req, res) => {
   try {
-    const id = req.params.id;
-    const updateData = { ...req.body };
+    const { id } = req.params;
+    const { name, price, section, ingredients } = req.body;
 
-    // Si viene una imagen nueva, actualizamos el campo photo
+    let updateData = { name, price, section };
+
+    // Procesamos los ingredientes (por si vienen como string o array)
+    if (ingredients) {
+      updateData.ingredients = Array.isArray(ingredients) 
+        ? ingredients 
+        : ingredients.split(',').map(ing => ing.trim());
+    }
+
     if (req.file) {
-      updateData.photo = req.file.filename;
+      updateData.image = req.file.filename;
     }
 
     const updatedItem = await MenuItem.findByIdAndUpdate(id, updateData, { new: true });
-    
-    if (!updatedItem) return res.status(404).json({ message: "No se encontró el item" });
 
-    return res.status(200).json(updatedItem);
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+
+    res.json({ message: "Producto actualizado con éxito", data: updatedItem });
   } catch (error) {
-    return res.status(500).json({ message: "Error al actualizar el Menu Item", error });
+    res.status(500).json({ error: error.message });
   }
 };
 
 const deleteMenuItem = async (req, res) => {
   try {
-    const id = req.params.id;
-    await MenuItem.findByIdAndDelete(id);
-    return res.status(200).json({ message: "Menu Item eliminado exitosamente" })
+    const { id } = req.params;
+    const deleted = await MenuItem.findByIdAndUpdate(id, { isActive: false }, { new: true });
+    if (!deleted) return res.status(404).json({ message: "No encontrado" });
+    res.json({ message: "Producto desactivado con éxito" });
   } catch (error) {
-    return res.status(500).json({ message:"Error al eliminar Menu Item", error});
+    res.status(500).json({ error: error.message });
   }
-}
+};
+
+const restoreMenuItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1. Buscamos el producto y traemos los datos de su sección (populate)
+    const product = await MenuItem.findById(id).populate('section');
+
+    if (!product) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+
+    // 2. Verificamos si la sección está activa, sino bloqueamos la restauración
+    if (!product.section || product.section.isActive === false) {
+      return res.status(400).json({ 
+        message: "No se puede restaurar el producto porque su sección ('" + 
+                 (product.section?.title || "Desconocida") + 
+                 "') está eliminada. Restaurá la sección primero." 
+      });
+    }
+
+    // 3. Restauramos el producto
+    product.isActive = true;
+    await product.save();
+
+    res.json({ message: "Producto restaurado con éxito", data: product });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
     createMenuItem,
     getMenuItemList,
     getMenuItem,
     updateMenuItem,
-    deleteMenuItem
+    deleteMenuItem,
+    restoreMenuItem
 }

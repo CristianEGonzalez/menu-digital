@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import styles from './addSection.module.css';
 
-const AddSection = ({ onClose, onSave }) => {
-
+const AddSection = ({ onClose, onSave, itemToEdit }) => {
+  // Inicializamos el estado. 
+  // Si itemToEdit existe, mapeamos los campos de la DB (title, link) a los del formulario (titulo, link)
   const [formData, setFormData] = useState({
-    titulo: '',
-    link: '',
+    titulo: itemToEdit ? itemToEdit.title : '',
+    link: itemToEdit ? itemToEdit.link : '',
     imagen: null
   });
 
   const [errors, setErrors] = useState({});
+  const isEditing = !!itemToEdit; // Booleano para saber si estamos editando
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -29,7 +31,6 @@ const AddSection = ({ onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newErrors = {};
 
     if (!formData.titulo.trim()) {
@@ -40,7 +41,9 @@ const AddSection = ({ onClose, onSave }) => {
       newErrors.link = "El slug es obligatorio";
     }
 
-    if (!formData.imagen) {
+    // Validación de imagen: solo es obligatoria si NO estamos editando.
+    // Si estamos editando y no sube nada, el backend mantendrá la imagen vieja.
+    if (!isEditing && !formData.imagen) {
       newErrors.imagen = "Debes subir una imagen";
     }
 
@@ -55,17 +58,14 @@ const AddSection = ({ onClose, onSave }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-
         <header className={styles.header}>
-          <h2>Nueva Sección</h2>
+          <h2>{isEditing ? "Editar Sección" : "Nueva Sección"}</h2>
           <button className={styles.closeBtn} onClick={onClose}>✕</button>
         </header>
 
         <form onSubmit={handleSubmit} className={styles.form} noValidate>
-
           <div className={styles.field}>
             <label>Título de la Sección</label>
-
             <input
               type="text"
               name="titulo"
@@ -74,7 +74,6 @@ const AddSection = ({ onClose, onSave }) => {
               onChange={handleChange}
               className={errors.titulo ? styles.errorInput : ""}
             />
-
             {errors.titulo && (
               <span className={styles.errorText}>{errors.titulo}</span>
             )}
@@ -82,7 +81,6 @@ const AddSection = ({ onClose, onSave }) => {
 
           <div className={styles.field}>
             <label>Slug / Link (URL)</label>
-
             <input
               type="text"
               name="link"
@@ -91,15 +89,15 @@ const AddSection = ({ onClose, onSave }) => {
               onChange={handleChange}
               className={errors.link ? styles.errorInput : ""}
             />
-
             {errors.link && (
               <span className={styles.errorText}>{errors.link}</span>
             )}
           </div>
 
           <div className={styles.field}>
-            <label>Imagen del Banner</label>
-
+            <label>
+              {isEditing ? "Cambiar Banner (opcional)" : "Imagen del Banner"}
+            </label>
             <div className={styles.fileInput}>
               <input
                 type="file"
@@ -107,14 +105,14 @@ const AddSection = ({ onClose, onSave }) => {
                 accept="image/*"
                 onChange={handleChange}
               />
-
               <span>
                 {formData.imagen
                   ? formData.imagen.name
-                  : "Haz clic para subir el banner"}
+                  : isEditing 
+                    ? "Dejar imagen actual" 
+                    : "Haz clic para subir el banner"}
               </span>
             </div>
-
             {errors.imagen && (
               <span className={styles.errorText}>{errors.imagen}</span>
             )}
@@ -130,15 +128,13 @@ const AddSection = ({ onClose, onSave }) => {
             >
               Cancelar
             </button>
-
             <button
               type="submit"
               className={styles.saveBtn}
             >
-              Crear Sección
+              {isEditing ? "Guardar Cambios" : "Crear Sección"}
             </button>
           </footer>
-
         </form>
       </div>
     </div>

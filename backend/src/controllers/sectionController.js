@@ -33,6 +33,30 @@ const getSections = async (req, res) => {
   res.json(secciones);
 };
 
+const updateSection = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, link } = req.body;
+    
+    let updateData = { title, link };
+
+    // Si viene imagen nueva (req.file existe), es porque Multer procesó una foto nueva
+    if (req.file) {
+      updateData.image = req.file.filename;
+    }
+
+    const updatedSection = await Section.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (!updatedSection) {
+      return res.status(404).json({ message: "Sección no encontrada" });
+    }
+
+    res.json({ message: "Sección actualizada con éxito", data: updatedSection });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const deleteSection = async (req, res) => {
   try {
     const { id } = req.params;
@@ -90,6 +114,7 @@ const restoreSection = async (req, res) => {
 module.exports = {
     createSection,
     getSections,
+    updateSection,
     deleteSection,
     restoreSection
 }

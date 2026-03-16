@@ -40,10 +40,10 @@ const Section = ({ seccion, todosLosProductos, agregarAlPedido }) => {
                         productosFiltrados.map((p) => (
                             <Card
                                 key={p._id}
-                                nombre={p.name} // Cambiamos .nombre por .name (DB)
-                                precio={p.price} // Agregamos precio si lo necesitas en la Card
-                                imagen={p.image} // Cambiamos .imagen por .image (DB)
-                                ingredientes={p.ingredients} // .ingredientes por .ingredients (DB)
+                                nombre={p.name}
+                                precio={p.price}
+                                imagen={p.image}
+                                ingredientes={p.ingredients}
                                 agregarAlPedido={agregarAlPedido}
                             />
                         ))

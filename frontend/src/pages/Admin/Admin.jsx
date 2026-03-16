@@ -7,22 +7,21 @@ import AddSection from "../../components/AddSection/AddSection";
 const Admin = () => {
   const [activeView, setActiveView] = useState("productos");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showInactive, setShowInactive] = useState(false);
+  const [seccionesParaSelect, setSeccionesParaSelect] = useState([]);
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // Función para cargar datos desde la API
   const fetchData = async () => {
     setLoading(true);
     try {
       const endpoint = activeView === "productos" ? "menuItems" : "sections";
-      // Si queremos ver inactivos, le avisamos a la API
       const url = showInactive ? `${endpoint}?all=true` : endpoint;
       const response = await apiFetch(url);
       setItems(response);
@@ -33,37 +32,56 @@ const Admin = () => {
     }
   };
 
-  // Asegurate de que useEffect escuche a showInactive
   useEffect(() => {
+    const cargarSecciones = async () => {
+      try {
+        const data = await apiFetch("sections");
+        setSeccionesParaSelect(data);
+      } catch (e) {
+        console.error("Error cargando secciones", e);
+      }
+    };
+    cargarSecciones();
     fetchData();
   }, [activeView, showInactive]);
 
-  // Función para guardar (POST)
+  const handleEdit = (item) => {
+    setEditingItem(item);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingItem(null);
+  };
+
   const handleSave = async (formData) => {
     try {
       const endpoint = activeView === "productos" ? "menuItems" : "sections";
+      const isEditing = !!editingItem;
 
-      // 1. Usamos FormData porque enviamos un archivo (imagen)
+      const url = isEditing ? `${endpoint}/${editingItem._id}` : endpoint;
+      const method = isEditing ? "PUT" : "POST";
+
       const dataToSend = new FormData();
 
-      // Mapeamos los campos del formulario al FormData
       if (activeView === "productos") {
         dataToSend.append("name", formData.nombre);
         dataToSend.append("price", formData.precio);
-        dataToSend.append("section", formData.seccion); // Aquí enviamos el ID o nombre según el back
-        dataToSend.append("image", formData.imagen);
-        // Los ingredientes los mandamos como string separado por comas si tu back lo espera así
-        dataToSend.append("ingredients", formData.ingredientes);
+        dataToSend.append("section", formData.seccion);
+        if (formData.imagen) dataToSend.append("image", formData.imagen);
+
+        formData.ingredientes.forEach((ing) => {
+          if (ing.trim() !== "") dataToSend.append("ingredients", ing);
+        });
       } else {
-        // Lógica para secciones si también llevan imagen
         dataToSend.append("title", formData.titulo);
         dataToSend.append("link", formData.link);
-        dataToSend.append("image", formData.imagen);
+        if (formData.imagen) dataToSend.append("image", formData.imagen);
       }
-      // 2. Llamada a la API
-      await apiFetch(endpoint, "POST", dataToSend);
-      // 3. Éxito: Cerramos modal y refrescamos la tabla
-      setIsModalOpen(false);
+
+      await apiFetch(url, method, dataToSend);
+      closeModal();
       fetchData();
     } catch (error) {
       alert("Error al guardar: " + error.message);
@@ -73,16 +91,12 @@ const Admin = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de que querés eliminar este elemento?"))
       return;
-
     try {
       const endpoint =
         activeView === "productos" ? `menuItems/${id}` : `sections/${id}`;
       await apiFetch(endpoint, "DELETE");
-
-      // Refrescamos la lista para que desaparezca de la tabla
       fetchData();
     } catch (error) {
-      // Si el backend nos manda el error 400 (bloqueo), lo mostramos aquí
       alert(error.message);
     }
   };
@@ -117,9 +131,7 @@ const Admin = () => {
         </div>
         <nav className={styles.navContainer}>
           <div
-            className={
-              activeView === "productos" ? styles.navItemActive : styles.navItem
-            }
+            className={activeView === "productos" ? styles.navItemActive : styles.navItem}
             onClick={() => {
               setActiveView("productos");
               setIsSidebarOpen(false);
@@ -128,9 +140,7 @@ const Admin = () => {
             🍔 PRODUCTOS
           </div>
           <div
-            className={
-              activeView === "secciones" ? styles.navItemActive : styles.navItem
-            }
+            className={activeView === "secciones" ? styles.navItemActive : styles.navItem}
             onClick={() => {
               setActiveView("secciones");
               setIsSidebarOpen(false);
@@ -165,7 +175,6 @@ const Admin = () => {
             </h1>
 
             <div className={styles.headerActions}>
-              {/* Contenedor del Toggle */}
               <label className={styles.toggleWrapper}>
                 <input
                   type="checkbox"
@@ -179,21 +188,15 @@ const Admin = () => {
                 <span className={styles.toggleText}>Mostrar eliminados</span>
               </label>
 
-              <button
-                className={styles.addButton}
-                onClick={() => setIsModalOpen(true)}
-              >
+              <button className={styles.addButton} onClick={() => setIsModalOpen(true)}>
                 + <span className={styles.btnText}>AGREGAR</span>
               </button>
             </div>
           </div>
 
           <div className={styles.tableWrapper}>
-            {/* Agregamos un loading por si la conexión con Docker tarda un poquito */}
             {loading ? (
-              <p style={{ padding: "20px" }}>
-                Cargando datos de la base de datos...
-              </p>
+              <p style={{ padding: "20px" }}>Cargando datos...</p>
             ) : (
               <table className={styles.productTable}>
                 <thead>
@@ -216,7 +219,6 @@ const Admin = () => {
                 <tbody>
                   {items.map((item) => (
                     <tr key={item._id}>
-                      {/* COLUMNA 1: IMAGEN */}
                       <td className={styles.productCell}>
                         <div className={styles.productInfo}>
                           <img
@@ -228,36 +230,28 @@ const Admin = () => {
                                 : styles.sectionBannerThumb
                             }
                           />
-                          {/* Si es producto, mostramos el nombre acá. Si es sección, lo dejamos para la siguiente columna */}
                           {activeView === "productos" && (
-                            <span className={styles.productName}>
-                              {item.name}
-                            </span>
+                            <span className={styles.productName}>{item.name}</span>
                           )}
                         </div>
                       </td>
 
-                      {/* COLUMNA 2: SECCIÓN (en productos) o TÍTULO (en secciones) */}
                       <td>
                         {activeView === "productos" ? (
                           <span className={styles.sectionBadge}>
                             {item.section?.title || "Sin sección"}
                           </span>
                         ) : (
-                          <span className={styles.productName}>
-                            {item.title}
-                          </span>
+                          <span className={styles.productName}>{item.title}</span>
                         )}
                       </td>
 
-                      {/* COLUMNA 3: PRECIO o LINK */}
                       <td className={`${styles.price} ${styles.hideMobile}`}>
                         {activeView === "productos"
                           ? `$${item.price?.toLocaleString("es-AR")}`
                           : item.link}
                       </td>
 
-                      {/* COLUMNA 4: ACCIONES */}
                       <td className={styles.actionsCell}>
                         {item.isActive === false ? (
                           <button
@@ -268,7 +262,12 @@ const Admin = () => {
                           </button>
                         ) : (
                           <>
-                            <button className={styles.actionBtn}>✏️</button>
+                            <button
+                              className={styles.actionBtn}
+                              onClick={() => handleEdit(item)}
+                            >
+                              ✏️
+                            </button>
                             <button
                               className={styles.actionBtn}
                               onClick={() => handleDelete(item._id)}
@@ -289,15 +288,17 @@ const Admin = () => {
 
       {isModalOpen &&
         (activeView === "productos" ? (
-          /* Conectamos el onSave con la función handleSave que llama a apiFetch */
           <AddMenuItem
-            onClose={() => setIsModalOpen(false)}
+            onClose={closeModal}
             onSave={handleSave}
+            secciones={seccionesParaSelect}
+            itemToEdit={editingItem}
           />
         ) : (
           <AddSection
-            onClose={() => setIsModalOpen(false)}
+            onClose={closeModal}
             onSave={handleSave}
+            itemToEdit={editingItem}
           />
         ))}
     </div>
