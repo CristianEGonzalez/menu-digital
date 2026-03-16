@@ -213,7 +213,7 @@
 
 /* Elementos de Tabla */
 .productCell {
-  min-width: 280px;
+  min-width: 100px;
 }
 
 .productInfo {
@@ -285,6 +285,76 @@
   text-align: right !important;
 }
 
+/* Contenedor de las acciones del header (Toggle + Botón) */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Espacio entre el switch y el botón Agregar */
+}
+
+/* Contenedor general del switch y el texto */
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ocultamos el checkbox original */
+.hiddenCheckbox {
+  display: none;
+}
+
+/* El cuerpo del Switch */
+.customToggle {
+  width: 42px;
+  height: 22px;
+  background-color: #e0e0e0;
+  border-radius: 50px;
+  position: relative;
+  transition: background-color 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+/* El circulito del Switch */
+.toggleCircle {
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Estilos cuando está ACTIVADO (Checked) */
+.hiddenCheckbox:checked + .customToggle {
+  background-color: #ffcc11; /* Tu amarillo Springfield */
+  border-color: #e6b800;
+}
+
+.hiddenCheckbox:checked + .customToggle .toggleCircle {
+  transform: translateX(20px);
+  background-color: #000; /* Círculo negro al activar para contraste */
+}
+
+/* Texto del "Mostrar eliminados" */
+.toggleText {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+/* Resaltar el texto cuando el toggle está activo */
+.hiddenCheckbox:checked ~ .toggleText {
+  color: #333;
+}
 
 /* Responsividad Tablet y Mobile */
 @media (max-width: 992px) {
@@ -351,6 +421,16 @@
   .productThumb { width: 35px; height: 35px; }
 
   .sectionBannerThumb { width: 80px; height: 35px; }
+
+  .headerActions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+  }
+  
+  .toggleText {
+    font-size: 0.65rem;
+  }
 }
 
 /* Aseguramos que la tabla ocupe el ancho */
