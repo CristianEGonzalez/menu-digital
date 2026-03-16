@@ -266,19 +266,71 @@
   padding-right: 30px !important;
 }
 
-.actionBtn {
-  background: none;
-  border: none;
+/* Botón de Borrado */
+.deleteBtn {
+  background-color: #fee2e2; /* Un rojo muy clarito de fondo */
+  color: #dc2626; /* Texto/Icono rojo fuerte */
+  border: 1px solid #fecaca;
+  padding: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 1.2rem;
-  margin-left: 15px;
-  transition: transform 0.2s ease, opacity 0.2s;
-  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
-.actionBtn:hover {
-  transform: scale(1.25);
-  opacity: 1;
+.deleteBtn:hover {
+  background-color: #dc2626; /* Se pone rojo sólido al hacer hover */
+  color: white;
+  border-color: #b91c1c;
+  transform: scale(1.05); /* Un pequeño aumento de tamaño */
+}
+
+.deleteBtn:active {
+  transform: scale(0.95);
+}
+
+/*Boton de Edición */
+.editBtn {
+  background-color: #fef3c7; /* Amarillo muy suave */
+  color: #d97706; /* Texto/Icono ámbar */
+  border: 1px solid #fcd34d;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.editBtn:hover {
+  background-color: #d97706;
+  color: white;
+  border-color: #b45309;
+  transform: scale(1.05);
+}
+
+/* El deleteBtn que ya teníamos */
+.deleteBtn {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.deleteBtn:hover {
+  background-color: #dc2626;
+  color: white;
+  border-color: #b91c1c;
+  transform: scale(1.05);
 }
 
 .textRight {
@@ -354,6 +406,42 @@
 /* Resaltar el texto cuando el toggle está activo */
 .hiddenCheckbox:checked ~ .toggleText {
   color: #333;
+}
+
+/* Estilo para el botón de Restaurar */
+.restoreBtn {
+  background-color: #10b981; /* Un verde esmeralda "vivo" */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: auto; /* Para que se alinee a la derecha si está solo */
+}
+
+.restoreBtn:hover {
+  background-color: #059669; /* Un verde más oscuro al pasar el mouse */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.restoreBtn:active {
+  transform: translateY(0);
+}
+
+/* Ajuste para que las acciones se vean alineadas */
+.actionsCell {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 100px;
 }
 
 /* Responsividad Tablet y Mobile */

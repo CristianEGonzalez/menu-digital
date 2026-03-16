@@ -3,6 +3,7 @@ import styles from "./admin.module.css";
 import { apiFetch } from "../../services/apiFetch";
 import AddMenuItem from "../../components/AddMenuItem/AddMenuItem";
 import AddSection from "../../components/AddSection/AddSection";
+import DeleteConfirmModal from "../../components/DeleteConfirmModal/DeleteConfirmModal";
 
 const Admin = () => {
   const [activeView, setActiveView] = useState("productos");
@@ -11,6 +12,8 @@ const Admin = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showInactive, setShowInactive] = useState(false);
   const [seccionesParaSelect, setSeccionesParaSelect] = useState([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,13 +91,21 @@ const Admin = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de que querés eliminar este elemento?"))
-      return;
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
     try {
-      const endpoint =
-        activeView === "productos" ? `menuItems/${id}` : `sections/${id}`;
+      const endpoint = activeView === "productos" 
+        ? `menuItems/${itemToDelete._id}` 
+        : `sections/${itemToDelete._id}`;
+      
       await apiFetch(endpoint, "DELETE");
+      setIsDeleteModalOpen(false);
+      setItemToDelete(null);
       fetchData();
     } catch (error) {
       alert(error.message);
@@ -263,14 +274,14 @@ const Admin = () => {
                         ) : (
                           <>
                             <button
-                              className={styles.actionBtn}
+                              className={styles.editBtn}
                               onClick={() => handleEdit(item)}
                             >
                               ✏️
                             </button>
                             <button
-                              className={styles.actionBtn}
-                              onClick={() => handleDelete(item._id)}
+                              className={styles.deleteBtn}
+                              onClick={() => handleDeleteClick(item)}
                             >
                               🗑️
                             </button>
@@ -285,6 +296,14 @@ const Admin = () => {
           </div>
         </main>
       </div>
+
+      <DeleteConfirmModal 
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemName={itemToDelete?.name || itemToDelete?.title}
+        type={activeView}
+      />
 
       {isModalOpen &&
         (activeView === "productos" ? (
