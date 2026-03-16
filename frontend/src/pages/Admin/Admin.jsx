@@ -4,6 +4,7 @@ import { apiFetch } from "../../services/apiFetch";
 import AddMenuItem from "../../components/AddMenuItem/AddMenuItem";
 import AddSection from "../../components/AddSection/AddSection";
 import DeleteConfirmModal from "../../components/DeleteConfirmModal/DeleteConfirmModal";
+import AlertModal from "../../components/AlertModal/AlertModal";
 
 const Admin = () => {
   const [activeView, setActiveView] = useState("productos");
@@ -14,9 +15,19 @@ const Admin = () => {
   const [seccionesParaSelect, setSeccionesParaSelect] = useState([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [alertConfig, setAlertConfig] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    type: "error",
+  });
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const showAlert = (title, message, type = "error") => {
+    setAlertConfig({ isOpen: true, title, message, type });
+  };
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -86,8 +97,14 @@ const Admin = () => {
       await apiFetch(url, method, dataToSend);
       closeModal();
       fetchData();
+
+      showAlert(
+        "¡Éxito!",
+        "Los cambios se guardaron correctamente.",
+        "success",
+      );
     } catch (error) {
-      alert("Error al guardar: " + error.message);
+      showAlert("Error al guardar", error.message, "error");
     }
   };
 
@@ -99,16 +116,18 @@ const Admin = () => {
   const confirmDelete = async () => {
     if (!itemToDelete) return;
     try {
-      const endpoint = activeView === "productos" 
-        ? `menuItems/${itemToDelete._id}` 
-        : `sections/${itemToDelete._id}`;
-      
+      const endpoint =
+        activeView === "productos"
+          ? `menuItems/${itemToDelete._id}`
+          : `sections/${itemToDelete._id}`;
+
       await apiFetch(endpoint, "DELETE");
       setIsDeleteModalOpen(false);
       setItemToDelete(null);
       fetchData();
     } catch (error) {
-      alert(error.message);
+      setIsDeleteModalOpen(false); // Cerramos el de pregunta
+      showAlert("No se pudo eliminar", error.message, "warning");
     }
   };
 
@@ -121,7 +140,7 @@ const Admin = () => {
       await apiFetch(endpoint, "PATCH");
       fetchData();
     } catch (error) {
-      alert("Error al restaurar: " + error.message);
+      showAlert("Atención", error.message, "error");
     }
   };
 
@@ -142,7 +161,9 @@ const Admin = () => {
         </div>
         <nav className={styles.navContainer}>
           <div
-            className={activeView === "productos" ? styles.navItemActive : styles.navItem}
+            className={
+              activeView === "productos" ? styles.navItemActive : styles.navItem
+            }
             onClick={() => {
               setActiveView("productos");
               setIsSidebarOpen(false);
@@ -151,7 +172,9 @@ const Admin = () => {
             🍔 PRODUCTOS
           </div>
           <div
-            className={activeView === "secciones" ? styles.navItemActive : styles.navItem}
+            className={
+              activeView === "secciones" ? styles.navItemActive : styles.navItem
+            }
             onClick={() => {
               setActiveView("secciones");
               setIsSidebarOpen(false);
@@ -199,7 +222,10 @@ const Admin = () => {
                 <span className={styles.toggleText}>Mostrar eliminados</span>
               </label>
 
-              <button className={styles.addButton} onClick={() => setIsModalOpen(true)}>
+              <button
+                className={styles.addButton}
+                onClick={() => setIsModalOpen(true)}
+              >
                 + <span className={styles.btnText}>AGREGAR</span>
               </button>
             </div>
@@ -242,7 +268,9 @@ const Admin = () => {
                             }
                           />
                           {activeView === "productos" && (
-                            <span className={styles.productName}>{item.name}</span>
+                            <span className={styles.productName}>
+                              {item.name}
+                            </span>
                           )}
                         </div>
                       </td>
@@ -253,7 +281,9 @@ const Admin = () => {
                             {item.section?.title || "Sin sección"}
                           </span>
                         ) : (
-                          <span className={styles.productName}>{item.title}</span>
+                          <span className={styles.productName}>
+                            {item.title}
+                          </span>
                         )}
                       </td>
 
@@ -297,7 +327,15 @@ const Admin = () => {
         </main>
       </div>
 
-      <DeleteConfirmModal 
+      <AlertModal
+        isOpen={alertConfig.isOpen}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        type={alertConfig.type}
+        onClose={() => setAlertConfig({ ...alertConfig, isOpen: false })}
+      />
+
+      <DeleteConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={confirmDelete}
