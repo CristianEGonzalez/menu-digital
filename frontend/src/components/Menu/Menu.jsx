@@ -1,12 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Section from '../Section/Section';
 import BotonPedido from '../BotonPedido/BotonPedido';
 import OrderModal from '../OrderModal/OrderModal';
-import { secciones } from '../../data';
+import { apiFetch } from '../../services/apiFetch';
 
 const Menu = () => {
+    const [seccionesDB, setSeccionesDB] = useState([]);
+    const [productosDB, setProductosDB] = useState([]);
     const [pedido, setPedido] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    // Cargar datos desde Docker
+    useEffect(() => {
+        const cargarMenu = async () => {
+            try {
+                setLoading(true);
+                // Traemos secciones y productos en paralelo
+                const [dataSecciones, dataProductos] = await Promise.all([
+                    apiFetch('sections'),
+                    apiFetch('menuItems')
+                ]);
+                
+                setSeccionesDB(dataSecciones);
+                setProductosDB(dataProductos);
+            } catch (error) {
+                console.error("Error al cargar el menú:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        cargarMenu();
+    }, []);
 
     // 1. AGREGAR
     const agregarAlPedido = (producto) => {
@@ -20,8 +46,6 @@ const Menu = () => {
             const nuevoPedido = [...pedido];
             nuevoPedido.splice(index, 1);
             setPedido(nuevoPedido);
-            
-            // Si nos quedamos sin items, cerramos el modal automáticamente
             if (nuevoPedido.length === 0) setIsModalOpen(false);
         }
     };
@@ -29,7 +53,8 @@ const Menu = () => {
     // 3. CONFIRMAR Y ENVIAR
     const confirmarPedido = (nombreCliente) => {
         const resumen = pedido.reduce((acc, item) => {
-            acc[item] = (acc[item] || 0) + 1;
+            const nombre = item.name || item; 
+            acc[nombre] = (acc[nombre] || 0) + 1;
             return acc;
         }, {});
 
@@ -46,15 +71,16 @@ const Menu = () => {
         setIsModalOpen(false);
     };
 
+    if (loading) return <div className="loading-screen">Cargando el menú de Springfield...</div>;
+
     return (
         <>
             <div className="menu-container">
-                {secciones.map((s, index) => (
+                {seccionesDB.map((s) => (
                     <Section
-                        key={index}
-                        titulo={s.titulo}
-                        link={s.link}
-                        imagen={s.imagen}
+                        key={s._id} // Usamos el ID de Mongo
+                        seccion={s} // Pasamos el objeto completo como acordamos en el componente Section
+                        todosLosProductos={productosDB}
                         agregarAlPedido={agregarAlPedido} 
                     />
                 ))}
@@ -67,14 +93,13 @@ const Menu = () => {
                 />
             )}
 
-            {/* Pasamos tanto agregar como eliminar al modal */}
             <OrderModal 
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onConfirm={confirmarPedido}
-                pedido={pedido}                   // Lista completa
-                agregarUno={agregarAlPedido}      // Botón (+)
-                eliminarUno={eliminarUnidad}      // Botón (-)
+                pedido={pedido} 
+                agregarUno={agregarAlPedido} 
+                eliminarUno={eliminarUnidad} 
             />
         </>
     );

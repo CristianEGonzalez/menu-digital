@@ -54,6 +54,30 @@
     justify-content: space-around;
 }
 
+.noProducts {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #bbb;
+  font-weight: 600;
+  font-size: 1.1rem;
+  background-color: #fafafa;
+  border: 2px dashed #eeeeee;
+  border-radius: 20px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.noProducts::before {
+  content: '👨‍🍳';
+  font-size: 2rem;
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
 @media screen and (max-width: 420px) {
     .title {
         font-size: 1.5rem;
