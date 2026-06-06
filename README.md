@@ -36,8 +36,8 @@ Este proyecto fue desarrollado con el objetivo de optimizar la actualización de
 1. **Clonar el repositorio:**
 
    ```bash
-   git clone [TU_URL_DEL_REPOSITORIO]
-   cd [NOMBRE_DE_LA_CARPETA]
+   git clone https://github.com/CristianEGonzalez/menu-digital.git
+   cd menu-digital
    ```
 
 2. **Instalar dependencias:**
@@ -92,6 +92,6 @@ Los scripts personalizados centralizan la gestión del ciclo de vida de los cont
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
-* **[Cristian Gonzalez]** - Desarrollador Full Stack
+* **Cristian Gonzalez** - Desarrollador Full Stack
