@@ -1,0 +1,15 @@
+{
+  "name": "menu-digital-root",
+  "version": "1.0.0",
+  "description": "Raíz del proyecto para Menú Digital - OldSpringfield",
+  "scripts": {
+    "docker:up": "docker-compose -f backend/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f backend/docker-compose.yml down",
+    "dev:services": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "start": "npm run docker:up && npm run dev:services",
+    "dev": "npm run dev:services"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
