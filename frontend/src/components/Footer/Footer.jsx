@@ -5,16 +5,16 @@ const Footer = () => {
 
     return (
         <footer className={styles.footer}>
-            {/* Sección de Copyright con Link a Byteland */}
+            {/* Sección de Copyright con Link a EnterCode */}
             <div className={styles.copyrightSection}>
                 <a 
-                    href="https://www.byteland.com.ar" 
+                    href="https://www.entercode.com.ar" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={styles.brandLink} // Clase nueva para este link
                 >
                     <p className={styles.text}>
-                        © Byteland | {currentYear} | Argentina
+                        © EnterCode | {currentYear} | Argentina
                     </p>
                 </a>
             </div>
@@ -24,7 +24,7 @@ const Footer = () => {
                 <ul className={styles.socialList}>
                     <li className={styles.socialItem}>
                         <a 
-                            href="https://www.instagram.com/byteland_ok" 
+                            href="https://www.instagram.com/entercode_ok" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className={styles.socialLink}
